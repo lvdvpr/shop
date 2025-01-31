@@ -1,8 +1,7 @@
-package com.apple.shop;
+package com.apple.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,5 +32,15 @@ public class ItemService {
     public Optional<Item> findItemById (Long id) {
         Optional<Item> item = itemRepository.findById(id);
         return item;
+    }
+
+    public void editItem(String title, String price, Long id) {
+        Item item = new Item();
+        item.setId(id);
+        item.setTitle(title);
+        String numberWithCommas = price;
+        String cleanedNumber = numberWithCommas.replace(",", "");
+        item.setPrice(Integer.valueOf(cleanedNumber));
+        itemRepository.save(item);
     }
 }

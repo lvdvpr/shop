@@ -1,4 +1,4 @@
-package com.apple.shop;
+package com.apple.shop.consumer;
 
 public class Consumer {
     private String name;

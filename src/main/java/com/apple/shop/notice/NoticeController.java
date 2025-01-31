@@ -1,4 +1,4 @@
-package com.apple.shop;
+package com.apple.shop.notice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
