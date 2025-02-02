@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class MyExceptionHandler {
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handler() {
         return ResponseEntity.status(400).body("에러남");

@@ -43,4 +43,8 @@ public class ItemService {
         item.setPrice(Integer.valueOf(cleanedNumber));
         itemRepository.save(item);
     }
+
+    public void deleteItemById(Long id) {
+        itemRepository.deleteById(id);
+    }
 }

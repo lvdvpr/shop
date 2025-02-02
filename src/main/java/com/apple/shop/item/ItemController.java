@@ -14,7 +14,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ItemController {
 
-    private final ItemRepository itemRepository;
     private final ItemService itemService;
 
     @GetMapping("/list")
@@ -49,7 +48,7 @@ public class ItemController {
 
     @GetMapping("/edit/{id}")
     String getEditForm(@PathVariable Long id, Model model) {
-        Optional<Item> item = itemRepository.findById(id);
+        Optional<Item> item = itemService.findItemById(id);
         if (item.isPresent()) {
             model.addAttribute("item", item.get());
             return "edit.html";
@@ -78,7 +77,7 @@ public class ItemController {
     
     @DeleteMapping("/delete")
     ResponseEntity<String> deleteItem(@RequestParam Long id) {
-        itemRepository.deleteById(id);
+        itemService.deleteItemById(id);
         return ResponseEntity.status(200).body("삭제완료");
     }
 
