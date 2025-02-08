@@ -12,7 +12,7 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public void saveItem(String title, String price) {
+    public void saveItem(String title, String price, String username) {
         // Object 만들기
         Item item = new Item();
         // title 값 넣기
@@ -21,6 +21,7 @@ public class ItemService {
         String numberWithCommas = price;
         String cleanedNumber = numberWithCommas.replace(",", "");
         item.setPrice(Integer.valueOf(cleanedNumber));
+        item.setUsername(username);
         itemRepository.save(item);
     }
 

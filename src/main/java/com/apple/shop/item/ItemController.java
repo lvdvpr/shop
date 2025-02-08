@@ -2,6 +2,8 @@ package com.apple.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +30,9 @@ public class ItemController {
         return "write.html";
     }
 
-
     @PostMapping("/add")
-    String addItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price) {
-        itemService.saveItem(title, price);
+    String addItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price, Authentication auth) {
+        itemService.saveItem(title, price, auth.getName());
         return "redirect:/list";
     }
 
@@ -74,7 +75,7 @@ public class ItemController {
         System.out.println(body.get("name"));
         return "redirect:/list";
     }
-    
+
     @DeleteMapping("/delete")
     ResponseEntity<String> deleteItem(@RequestParam Long id) {
         itemService.deleteItemById(id);

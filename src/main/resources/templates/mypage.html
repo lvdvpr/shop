@@ -5,16 +5,18 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>write</title>
+    <title>mypage</title>
     <link href="/main.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{ nav.html::navbar }"></div>
 
-<form action="/add" method="POST">
-    <input name="title" placeholder="물건이름">
-    <input name="price" placeholder="가격">
-    <button type="submit">전송</button>
-</form>
+<h4>마이페이지</h4>
+
+<div sec:authorize="hasAuthority('일반유저')">
+    <div sec:authentication="principal.username"></div>
+    <h4>이 유저는 일반유저 권한임</h4>
+</div>
+
 </body>
 </html>
