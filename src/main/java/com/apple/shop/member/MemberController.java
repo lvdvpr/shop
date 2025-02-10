@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
 
@@ -13,6 +14,7 @@ import java.security.Principal;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/register")
     public String register(Authentication auth) {
@@ -37,10 +39,18 @@ public class MemberController {
     @GetMapping("/mypage")
     public String myPage(Authentication auth) {
         if (auth != null && auth.isAuthenticated()) {
+            MyUserDetailsService.CustomUser result = (MyUserDetailsService.CustomUser) auth.getPrincipal();
             return "mypage.html";
         } else {
             return "login.html";
         }
+    }
+
+    @GetMapping("/user/1")
+    @ResponseBody
+    public MemberDto getUser() {
+        MemberDto memberDto = memberService.getUser();
+        return memberDto;
     }
 
 }
