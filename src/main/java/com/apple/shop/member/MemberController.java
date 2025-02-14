@@ -39,7 +39,7 @@ public class MemberController {
     @GetMapping("/mypage")
     public String myPage(Authentication auth) {
         if (auth != null && auth.isAuthenticated()) {
-            MyUserDetailsService.CustomUser result = (MyUserDetailsService.CustomUser) auth.getPrincipal();
+            CustomUser result = (CustomUser) auth.getPrincipal();
             return "mypage.html";
         } else {
             return "login.html";

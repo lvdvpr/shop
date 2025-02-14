@@ -2,12 +2,10 @@
     margin : 30px auto;
     display : flex;
 }
-
 .card img {
     width : 150px;
     margin-right : 20px;
 }
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap');
 .nav {
  display: flex;
@@ -24,7 +22,6 @@
 .nav .logo {
  font-weight : 800;
 }
-
 input, button {
  padding : 8px 13px;
  margin-top : 5px;
@@ -40,7 +37,6 @@ button {
 input {
  display : block;
 }
-
 .detail {
   text-align : center;
 }
@@ -49,4 +45,3 @@ input {
   display : block;
   margin : auto;
 }
-

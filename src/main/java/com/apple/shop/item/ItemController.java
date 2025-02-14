@@ -1,6 +1,8 @@
 package com.apple.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -17,13 +19,14 @@ import java.util.Optional;
 public class ItemController {
 
     private final ItemService itemService;
+    private final ItemRepository itemRepository;
 
-    @GetMapping("/list")
-    String getItemList(Model model) {
-        List<Item> itemList = itemService.findAllItem();
-        model.addAttribute("itemList", itemList);
-        return "list.html";
-    }
+//    @GetMapping("/list")
+//    String getItemList(Model model) {
+//        List<Item> itemList = itemService.findAllItem();
+//        model.addAttribute("itemList", itemList);
+//        return "list.html";
+//    }
 
     @GetMapping("/write")
     String getWriteForm() {
@@ -80,6 +83,24 @@ public class ItemController {
     ResponseEntity<String> deleteItem(@RequestParam Long id) {
         itemService.deleteItemById(id);
         return ResponseEntity.status(200).body("삭제완료");
+    }
+
+    @GetMapping({"/list", "/list/{pageNum}"})
+    String getListPage(Model model, @PathVariable(required = false) Optional<Integer> pageNum) {
+        int page;
+        if (pageNum.isPresent()) {
+            page = pageNum.get();
+        } else {
+            page = 1;
+        }
+        Page<Item> result = itemRepository.findPageBy(PageRequest.of(page-1, 5));
+        model.addAttribute("itemList", result);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", result.getTotalPages());
+        model.addAttribute("hasNext", result.hasNext());
+        model.addAttribute("hasPrevious", result.hasPrevious());
+
+        return "list.html";
     }
 
 
