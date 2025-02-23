@@ -5,6 +5,8 @@
 .card img {
     width : 150px;
     margin-right : 20px;
+    max-height: 150px;
+    object-fit: contain;
 }
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap');
 .nav {

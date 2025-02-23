@@ -20,13 +20,7 @@ public class ItemController {
 
     private final ItemService itemService;
     private final ItemRepository itemRepository;
-
-//    @GetMapping("/list")
-//    String getItemList(Model model) {
-//        List<Item> itemList = itemService.findAllItem();
-//        model.addAttribute("itemList", itemList);
-//        return "list.html";
-//    }
+    private final S3Service s3Service;
 
     @GetMapping("/write")
     String getWriteForm() {
@@ -34,8 +28,8 @@ public class ItemController {
     }
 
     @PostMapping("/add")
-    String addItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price, Authentication auth) {
-        itemService.saveItem(title, price, auth.getName());
+    String addItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price, String image_url, Authentication auth) {
+        itemService.saveItem(title, price, image_url, auth.getName());
         return "redirect:/list";
     }
 
@@ -103,6 +97,13 @@ public class ItemController {
         return "list.html";
     }
 
+    @GetMapping("/presigned-url")
+    @ResponseBody
+    String getURL(@RequestParam String filename) {
+        var result = s3Service.createPresignedUrl("test/" + filename);
+
+        return result;
+    }
 
 
 }

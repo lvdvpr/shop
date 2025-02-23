@@ -18,5 +18,6 @@ public class Item {
     private String title;
     private Integer price;
     private String username;
+    private String image_url;
 }
 
