@@ -1,5 +1,8 @@
 package com.apple.shop.item;
 
+import com.apple.shop.comment.Comment;
+import com.apple.shop.comment.CommentRepository;
+import com.apple.shop.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +24,7 @@ public class ItemController {
     private final ItemService itemService;
     private final ItemRepository itemRepository;
     private final S3Service s3Service;
+    private final CommentService commentService;
 
     @GetMapping("/write")
     String getWriteForm() {
@@ -36,8 +40,10 @@ public class ItemController {
     @GetMapping("/detail/{id}")
     String detail(@PathVariable Long id, Model model) {
         Optional<Item> item = itemService.findItemById(id);
+        List<Comment> commentList = commentService.findAllCommentById(id);
         if ( item.isPresent()) {
             model.addAttribute("item", item.get());
+            model.addAttribute("commentList", commentList);
             return "detail.html";
         } else {
             return "redirect:/list";
