@@ -33,6 +33,9 @@ public class ItemController {
 
     @PostMapping("/add")
     String addItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price, String image_url, Authentication auth) {
+        if (image_url.trim().isEmpty()) {
+            image_url = null; // 빈 문자열을 null로 변환
+        }
         itemService.saveItem(title, price, image_url, auth.getName());
         return "redirect:/list";
     }
@@ -106,10 +109,19 @@ public class ItemController {
     @GetMapping("/presigned-url")
     @ResponseBody
     String getURL(@RequestParam String filename) {
-        var result = s3Service.createPresignedUrl("test/" + filename);
+        var presignedURL = s3Service.createPresignedUrl("test/" + filename);
 
-        return result;
+        return presignedURL;
     }
+
+    @PostMapping("/search")
+    String searchPost(@RequestParam(name="searchText") String searchText, Model model) {
+        var result = itemRepository.fullTextSearch(searchText);
+        model.addAttribute("itemList", result);
+
+        return "searchList.html";
+    }
+
 
 
 }

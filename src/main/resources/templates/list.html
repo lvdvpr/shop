@@ -32,6 +32,11 @@
 <body>
     <div th:replace="~{ nav.html::navbar }"></div>
 
+    <form action="/search" method="POST">
+        <input type="text" name="searchText" style="display : inline">
+        <button type="submit">검색</button>
+    </form>
+
     <div class="card" th:each="item : ${itemList}">
         <img th:src="${item.image_url != null ? item.image_url : 'https://placehold.co/300'}">
         <div>

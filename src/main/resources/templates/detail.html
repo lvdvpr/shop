@@ -17,12 +17,19 @@
     <div th:if="${item != null}">
         <img th:src="${item.image_url != null ? item.image_url : 'https://placehold.co/300'}">
         <h4 th:text="${item.title}"></h4>
-        <p th:text="${item.price}"></p>
+        <p th:text="${item.price + '원'}"></p>
     </div>
 
     <div th:if="${item == null}">
         <p th:text="${errorMessage}"></p>
     </div>
+
+    <form action="/order" method="POST">
+        <input name="title" th:value="${item.title}">
+        <input name="price" th:value="${item.price}">
+        <input name="count" placeholder="count">
+        <button>주문하기</button>
+    </form>
 
     <form action="/addComment" method="POST" style="display: flex; align-items: center; gap: 10px;" sec:authorize="isAuthenticated()">
         <strong sec:authentication="principal.username"></strong>
