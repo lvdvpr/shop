@@ -1,6 +1,7 @@
 package com.apple.shop.sales;
 
 import com.apple.shop.member.Member;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,8 @@ public class Sales {
     private String itemName;
     private Integer price;
     private Integer count;
-    @ManyToOne
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id",
     foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
     )
