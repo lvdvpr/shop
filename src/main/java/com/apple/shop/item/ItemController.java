@@ -96,7 +96,7 @@ public class ItemController {
         } else {
             page = 1;
         }
-        Page<Item> result = itemRepository.findPageBy(PageRequest.of(page-1, 5));
+        Page<Item> result = itemRepository.findPageBy(PageRequest.of(page-1, 10));
         model.addAttribute("itemList", result);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", result.getTotalPages());
