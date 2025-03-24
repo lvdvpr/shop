@@ -1,7 +1,6 @@
 package com.apple.shop.sales;
 
 import com.apple.shop.member.CustomUser;
-import com.apple.shop.member.Member;
 import com.apple.shop.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

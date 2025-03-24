@@ -19,6 +19,24 @@
         a {
             text-decoration: none; /* 밑줄 제거 */
         }
+        .flex-container {
+            justify-content: center;
+            margin : 30px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5개씩 배치 */
+            gap: 20px;
+            place-items: center; /* 내부 아이템을 수직/수평 중앙 정렬 */
+        }
+        .flex-item {
+            width: 200px; /* 원하는 크기로 조절 */
+            margin: 20px;
+            justify-content: center;
+        }
+        .flex-container img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+        }
         .pagination {
             display: flex;
             gap: 5px;
