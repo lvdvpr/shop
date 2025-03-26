@@ -1,9 +1,14 @@
-.nav a {
-    text-decoration: none; /* 밑줄 제거 */
-    font-size: 18px; /* 글자 크기 조정 */
-    margin: 0 15px; /* 각 항목 간격 */
-}
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap');
+* {
+ font-family : 'Montserrat';
+ color: black;
+}
+.nav a {
+ text-decoration: none; /* 밑줄 제거 */
+ font-size: 18px;
+ margin: 0 15px;
+ color: black;
+}
 .nav {
  display: flex;
  padding: 10px;
@@ -35,6 +40,6 @@ input {
  display : block;
 }
 .detail img{
-  max-width : 30%;
-  margin : auto;
+ max-width : 30%;
+ margin : auto;
 }
