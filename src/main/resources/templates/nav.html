@@ -1,13 +1,19 @@
 <div class="nav" th:fragment="navbar">
-    <a class="logo">SpringMall</a>
-    <a href="/list">List</a>
-    <a href="/write">Write</a>
-    <span sec:authorize="isAuthenticated()">
-        <a href="/logout">Logout</a>
-        <span sec:authentication="principal.username"></span>님 환영합니다
-    </span>
-    <span sec:authorize="isAnonymous()">
-        <a href="/register">Join</a>
-        <a href="/login">Login</a>
-    </span>
+    <div style="text-align:left;">
+        <a class="logo">SpringMall</a>
+    </div>
+    <div style="flex-grow: 2; text-align:center;" >
+        <a href="/list">List</a>
+        <a href="/write">Write</a>
+    </div>
+    <div style="text-align:right;">
+        <span sec:authorize="isAuthenticated()">
+            <a href="/logout">Logout</a>
+            <span sec:authentication="principal.username"></span>님 환영합니다
+        </span>
+            <span sec:authorize="isAnonymous()">
+            <a href="/register">Join</a>
+            <a href="/login">Login</a>
+        </span>
+    </div>
 </div>

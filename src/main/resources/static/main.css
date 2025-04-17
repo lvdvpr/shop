@@ -3,23 +3,18 @@
  font-family : 'Montserrat';
  color: black;
 }
-.nav a {
- text-decoration: none; /* 밑줄 제거 */
- font-size: 18px;
- margin: 0 15px;
- color: black;
-}
 .nav {
  display: flex;
  padding: 10px;
- align-items: center;
  font-family : 'Montserrat';
 }
 .nav a {
- margin-right: 10px;
+ color: black;
+ margin: 10px;
  text-decoration : none;
+ font-size: 18px;
  font-weight : 400;
- letter-spacing : -0.5px;
+ letter-spacing : -0.5px; /*자간간격*/
 }
 .nav .logo {
  font-weight : 800;

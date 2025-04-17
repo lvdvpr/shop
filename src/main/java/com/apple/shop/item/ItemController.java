@@ -103,6 +103,15 @@ public class ItemController {
         model.addAttribute("hasNext", result.hasNext());
         model.addAttribute("hasPrevious", result.hasPrevious());
 
+        int blockSize = 5;
+        int currentBlock = (int) Math.ceil((double) page / blockSize);
+        int startPage = (currentBlock - 1) * blockSize + 1;
+        int endPage = Math.min(startPage + blockSize - 1, result.getTotalPages());
+        model.addAttribute("blockSize", blockSize);
+        model.addAttribute("currentBlock", currentBlock);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
         return "list.html";
     }
 

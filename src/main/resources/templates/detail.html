@@ -49,6 +49,13 @@
                     <input name="count" placeholder="count">
                     <button>주문하기</button>
                 </form>
+                <a th:href="@{'/edit/' + ${item.id} }">✏️</a>
+                <span th:onclick="fetch('/delete?id=[[${item.id}]]', {method : 'DELETE'})
+                .then(r => r.text())
+                .then(() => {
+                  location.reload();
+                })
+                ">🗑️</span>
             </div>
         </div>
         </div>

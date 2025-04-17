@@ -29,9 +29,19 @@
             place-items: center; /* 내부 아이템을 수직/수평 중앙 정렬 */
         }
         .flex-item {
-            width: 200px; /* 원하는 크기로 조절 */
-            margin: 20px;
-            justify-content: center;
+            width: 200px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+        }
+        .flex-item h4 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            width: 100%;
         }
         .flex-container img {
             width: 200px;
@@ -77,36 +87,28 @@
             <div>
                 <a th:href="@{'/detail/' + ${item.id} }"><h4 th:text="${item.title}"></h4></a>
                 <p th:text="${item.price + '원'}"></p>
-                <a th:href="@{'/edit/' + ${item.id} }">✏️</a>
-                <span th:onclick="fetch('/delete?id=[[${item.id}]]', {method : 'DELETE'})
-                .then(r => r.text())
-                .then(() => {
-                  location.reload();
-                })
-                ">🗑️</span>
             </div>
         </div>
     </div>
     <div class="pagination">
-        <a th:if="${hasPrevious}" th:href="@{'/list/'+${currentPage -1}}">« Prev</a>
-        <a th:each="pageNum : ${#numbers.sequence(1, totalPages)}"
-           th:href="@{'/list/'+ ${pageNum}}"
-           th:text="${pageNum}">
+        <a th:if="${startPage > 1}"
+           th:href="@{'/list/' + ${startPage - 1}}">
+            « Prev
         </a>
-        <a th:if="${hasNext}" th:href="@{'/list/'+${currentPage +1}}">Next »</a>
+
+        <a th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
+           th:href="@{'/list/' + ${pageNum}}"
+           th:text="${pageNum}"
+           th:classappend="${pageNum == currentPage} ? ' active'">
+        </a>
+
+        <a th:if="${endPage < totalPages}"
+           th:href="@{'/list/' + ${endPage + 1}}">
+            Next »
+        </a>
     </div>
 
-    <button class="btn" style="display: none;">버튼</button>
-
 <script>
-
-    document.querySelectorAll('.btn')[0].addEventListener('click', function() {
-      fetch('/test1', {
-        method : 'POST',
-        headers : { 'Content-Type' : 'application/json' },
-        body : JSON.stringify({name : 'kim'})
-      })
-    })
 
     const navigation = performance.getEntriesByType("navigation")[0];
     console.log("페이지 이동 방식:", navigation.type);
