@@ -5,7 +5,7 @@
 > **사용기술**
 
 - FrontEnd : HTML, CSS, JavaScript, Thymeleaf
-- BackEnd : Java, SpringBoot, JPA, AWS S3
+- BackEnd : Java, SpringBoot, JPA, python, AWS S3
 - DataBase :  Azure, MySQL
 
 > **개발환경**
@@ -17,6 +17,7 @@
 > **기능 구현**
 
 - Azure을 활용하여 MySQL을 호스팅
+- python 크롤링으로 수집한 데이터를 데이터베이스에 적재하였습니다.
 - [AWS S3](https://github.com/lvdvpr/shop/blob/main/src/main/java/com/apple/shop/item/S3Service.java)를 활용한 이미지 업로드기능 구현
 - [@ManyToOne](https://github.com/lvdvpr/shop/blob/main/src/main/java/com/apple/shop/sales/Sales.java) 사용시 N+1 방지를 위한 [JOIN FETCH](https://github.com/lvdvpr/shop/blob/main/src/main/java/com/apple/shop/sales/SalesRepository.java) 적용
 - Spring Security를 적용한 가입 및 로그인기능
