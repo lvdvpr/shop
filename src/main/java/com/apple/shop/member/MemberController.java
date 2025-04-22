@@ -46,11 +46,4 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/user/1")
-    @ResponseBody
-    public MemberDto getUser() {
-        MemberDto memberDto = memberService.getUser();
-        return memberDto;
-    }
-
 }

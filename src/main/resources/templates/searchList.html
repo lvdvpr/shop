@@ -9,9 +9,45 @@
     <title>itemList</title>
     <link href="/main.css" rel="stylesheet">
     <style>
-        .pagination {
+        .search-container {
             display: flex;
-            gap: 5px;
+            justify-content: flex-end;
+            margin-right: 50px;
+        }
+        div {
+            text-align: center;
+        }
+        a {
+            text-decoration: none; /* 밑줄 제거 */
+        }
+        .flex-container {
+            justify-content: center;
+            margin : 30px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5개씩 배치 */
+            gap: 20px;
+            place-items: center; /* 내부 아이템을 수직/수평 중앙 정렬 */
+        }
+        .flex-item {
+            width: 200px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+        }
+        .flex-item h4 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            width: 100%;
+        }
+        .flex-container img {
+            width: 200px;
+            height: 200px;
+            margin: 5px;
+            /* object-fit: contain; */ /* 이미지 원본 비율 유지 */
         }
         .pagination a {
             padding: 8px 12px;
@@ -33,23 +69,20 @@
 <body>
 <div th:replace="~{ nav.html::navbar }"></div>
 
-<form action="/search" method="POST">
-    <input type="text" name="searchText" style="display : inline">
-    <button type="submit">검색</button>
-</form>
+<div class="search-container">
+    <form action="/search" method="POST">
+        <input type="text" name="searchText" style="display : inline">
+        <button type="submit">검색</button>
+    </form>
+</div>
 
-<div class="card" th:each="item : ${itemList}">
-    <img th:src="${item.image_url != null ? item.image_url : 'https://placehold.co/300'}">
-    <div>
-        <a th:href="@{'/detail/' + ${item.id} }"><h4 th:text="${item.title}"></h4></a>
-        <p th:text="${item.price + '원'}"></p>
-        <a th:href="@{'/edit/' + ${item.id} }">✏️</a>
-        <span th:onclick="fetch('/delete?id=[[${item.id}]]', {method : 'DELETE'})
-            .then(r => r.text())
-            .then(() => {
-              location.reload();
-            })
-            ">🗑️</span>
+<div class="flex-container">
+    <div class="flex-item"  th:each="item : ${itemList}">
+        <img th:src="${item.image_url != null ? item.image_url : 'https://placehold.co/300'}">
+        <div>
+            <a th:href="@{'/detail/' + ${item.id} }"><h4 th:text="${item.title}"></h4></a>
+            <p th:text="${item.price + '원'}"></p>
+        </div>
     </div>
 </div>
 

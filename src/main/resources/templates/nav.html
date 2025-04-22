@@ -3,8 +3,14 @@
         <a class="logo">SpringMall</a>
     </div>
     <div style="flex-grow: 2; text-align:center;" >
-        <a href="/list">List</a>
-        <a href="/write">Write</a>
+            <a href="/list">List</a>
+        <span sec:authorize="isAuthenticated()">
+            <a href="/write">Write</a>
+            <a href="/myOrder/all">주문내역</a>
+        </span>
+        <span sec:authorize="isAuthenticated()">
+            <a href="/order/all">총주문내역</a>
+        </span>
     </div>
     <div style="text-align:right;">
         <span sec:authorize="isAuthenticated()">
