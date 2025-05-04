@@ -48,21 +48,21 @@
         <div class="col-8">
             <div class="right_area">
                 <h4 th:text="${item.title}"></h4>
-                <p th:text="${item.price + '원'}"></p>
+                <p th:text="${#numbers.formatInteger(item.price, 3, 'COMMA') + '원'}"></p>
 
                 <form action="/order" method="POST">
                     <input type="text" name="title" th:value="${item.title}" readonly>
-                    <input type="text" name="price" th:value="${item.price}" readonly>
+                    <input type="text" name="price" th:value="${#numbers.formatInteger(item.price, 3, 'COMMA') + '원'}" readonly>
                     <input type="number" name="count" value="1" min="1" max="10" step="1">
                     <button>주문하기</button>
                 </form>
                 <a th:href="@{'/edit/' + ${item.id} }">✏️</a>
-                <span th:onclick="fetch('/delete?id=[[${item.id}]]', {method : 'DELETE'})
+                <span th:onclick="if(confirm('정말 삭제하겠습니까?')) {fetch('/delete?id=[[${item.id}]]', {method : 'DELETE'})
                 .then(r => r.text())
                 .then(() => {
                   location.reload();
                 })
-                ">🗑️</span>
+                }">🗑️</span>
             </div>
         </div>
         </div>

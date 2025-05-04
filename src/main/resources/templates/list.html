@@ -86,7 +86,7 @@
             <img th:src="${item.image_url != null ? item.image_url : 'https://placehold.co/300'}">
             <div>
                 <a th:href="@{'/detail/' + ${item.id} }"><h4 th:text="${item.title}"></h4></a>
-                <p th:text="${item.price + '원'}"></p>
+                <p th:text="${#numbers.formatInteger(item.price, 3, 'COMMA') + '원'}"></p>
             </div>
         </div>
     </div>

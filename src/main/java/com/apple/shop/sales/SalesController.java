@@ -22,10 +22,12 @@ public class SalesController {
 
     @PostMapping("/order")
     public String order(@RequestParam String title,
-                        @RequestParam Integer price,
+                        @RequestParam String price,
                         @RequestParam Integer count,
                         Authentication auth) {
-        salesService.saveSales(title, price, count, auth);
+
+        int parsedPrice = Integer.parseInt(price.replaceAll("[,원]",""));
+        salesService.saveSales(title, parsedPrice, count, auth);
         return "redirect:/list";
     }
 
