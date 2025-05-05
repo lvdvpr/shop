@@ -65,8 +65,11 @@ public class ItemController {
     }
 
     @PostMapping("/edit")
-    String editItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price, Long id) {
-        itemService.editItem(title, price, id);
+    String editItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price, Long id,  String image_url, Authentication auth) {
+        if (image_url.trim().isEmpty()) {
+            image_url = null;
+        }
+        itemService.editItem(title, price, id, image_url, auth.getName());
         return "redirect:/list";
     }
 
@@ -129,6 +132,14 @@ public class ItemController {
         model.addAttribute("itemList", result);
 
         return "searchList.html";
+    }
+
+    @GetMapping("/presigned-new-url")
+    @ResponseBody
+    String getNewURL(@RequestParam String filename) {
+        var presignedNewURL = s3Service.createPresignedUrl("test/" + filename);
+
+        return presignedNewURL;
     }
 
 

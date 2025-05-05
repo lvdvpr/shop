@@ -9,6 +9,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" >
     <link href="/main.css" rel="stylesheet">
     <style>
+        img {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            /* object-fit: contain; */ /* 이미지 원본 비율 유지 */
+        }
+        .left_area {
+            width: 500px;
+            height: 500px;
+        }
+        .right_area {
+            width: 500px;
+            height: 500px;
+        }
         button {
             margin: 15px 0px 15px 0px;
         }
@@ -17,15 +31,47 @@
 <body>
 <div th:replace="~{ nav.html::navbar }"></div>
 
-<div class="flex-container">
+<div class="container-fluid">
     <div class="row m-3">
-        <form action="/edit" method="POST">
-            <input name="id" th:value="${item.id}" style="display:none">
-            <input name="title" th:value="${item.title}">
-            <input name="price" th:value="${item.price}">
-            <button type="submit">수정</button>
-        </form>
+        <h4>수정페이지</h4>
+    </div>
+    <div class="row m-3" th:if="${item != null}">
+        <div class="col-4">
+            <div class="left_area">
+                <img th:src="${item.image_url != null ? item.image_url : 'https://placehold.co/300'}">
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="right_area">
+                <form action="/edit" method="POST" onsubmit="return confirm('정말 수정하시겠습니까?')">
+                    <input name="id" th:value="${item.id}" style="display:none">
+                    <input name="title" th:value="${item.title}">
+                    <input name="price" th:value="${item.price}">
+                    <input type="file" onchange="getURL(this)">
+                    <input type="hidden" name="image_url" th:value="${item.image_url}">
+                    <button type="submit">수정</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+<script>
+    async function getURL(e) {
+        let name = encodeURIComponent(e.files[0].name)
+        let presignedNewURL = await fetch('/presigned-new-url?filename=' + name)
+        presignedNewURL = await presignedNewURL.text()
+
+        let result = await fetch(presignedNewURL, {
+            method : 'PUT',
+            body : e.files[0]
+        })
+
+        if (result.ok) {
+            let splitURL = result.url.split("?")[0];
+            document.querySelector('img').src = splitURL;
+            document.querySelector('input[name="image_url"]').value = splitURL;
+        }
+    }
+</script>
 </body>
 </html>

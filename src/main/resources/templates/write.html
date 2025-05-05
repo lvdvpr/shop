@@ -12,7 +12,10 @@
 <body>
 <div th:replace="~{ nav.html::navbar }"></div>
 
-<div class="flex-container">
+<div class="container-fluid">
+    <div class="row m-3">
+        <h4>상품등록페이지</h4>
+    </div>
     <div class="row m-3">
         <form action="/add" method="POST">
             <input name="title" placeholder="물건이름">

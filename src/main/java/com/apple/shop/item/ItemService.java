@@ -36,13 +36,15 @@ public class ItemService {
         return item;
     }
 
-    public void editItem(String title, String price, Long id) {
+    public void editItem(String title, String price, Long id, String image_url, String username) {
         Item item = new Item();
         item.setId(id);
         item.setTitle(title);
         String numberWithCommas = price;
         String cleanedNumber = numberWithCommas.replace(",", "");
         item.setPrice(Integer.valueOf(cleanedNumber));
+        item.setImage_url(image_url);
+        item.setUsername(username);
         itemRepository.save(item);
     }
 
