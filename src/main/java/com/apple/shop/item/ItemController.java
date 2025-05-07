@@ -110,8 +110,6 @@ public class ItemController {
         int currentBlock = (int) Math.ceil((double) page / blockSize);
         int startPage = (currentBlock - 1) * blockSize + 1;
         int endPage = Math.min(startPage + blockSize - 1, result.getTotalPages());
-        model.addAttribute("blockSize", blockSize);
-        model.addAttribute("currentBlock", currentBlock);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 

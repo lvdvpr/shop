@@ -93,23 +93,30 @@
     <div class="pagination">
         <a th:if="${startPage > 1}"
            th:href="@{'/list/' + ${startPage - 1}}">
-            « Prev
+            «
         </a>
-
+        <a th:if="${hasPrevious}"
+           th:href="@{'/list/' + ${currentPage -1}}">
+            <
+        </a>
         <a th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
            th:href="@{'/list/' + ${pageNum}}"
            th:text="${pageNum}"
            th:classappend="${pageNum == currentPage} ? ' active'">
         </a>
-
+        <a th:if="${hasNext}"
+           th:href="@{'/list/' + ${currentPage +1}}">
+            >
+        </a>
         <a th:if="${endPage < totalPages}"
            th:href="@{'/list/' + ${endPage + 1}}">
-            Next »
+            »
         </a>
     </div>
 
 <script>
 
+    // 페이지가 어떻게 로드되었는지 알려주는 속성
     const navigation = performance.getEntriesByType("navigation")[0];
     console.log("페이지 이동 방식:", navigation.type);
 
