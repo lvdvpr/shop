@@ -8,6 +8,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" >
     <title>MyOrderList</title>
     <link href="/main.css" rel="stylesheet">
+    <style>
+        .pagination {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+        .pagination a {
+            padding: 8px 12px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            color: black;
+            border-radius: 4px;
+        }
+        .pagination a:hover {
+            background-color: #f1f1f1;
+        }
+        .pagination .active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{ nav.html::navbar }"></div>
@@ -40,7 +62,7 @@
             </thead>
             <tbody>
                 <tr th:each="order, iterStat : ${orderList}">
-                    <td th:text="${iterStat.count}"></td>
+                    <td th:text="${(currentPage -1) * 10 + iterStat.count}"></td>
                     <td th:text="${order.itemName}"></td>
                     <td th:text="${#temporals.format(order.created, 'yyyy년 MM월 dd일 HH시 mm분')}"></td>
                     <td th:text="${#numbers.formatInteger(order.price, 3, 'COMMA')+ '원'}"></td>
@@ -49,6 +71,29 @@
                 </tr>
             </tbody>
         </table>
+        <div class="pagination" th:if="${totalPages > 0}">
+            <a th:if="${startPage > 1}"
+               th:href="@{'/myOrder/all/' + ${startPage - 1}}">
+                «
+            </a>
+            <a th:if="${hasPrevious}"
+               th:href="@{'/myOrder/all/' + ${currentPage -1}}">
+                <
+            </a>
+            <a th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
+               th:href="@{'/myOrder/all/' + ${pageNum}}"
+               th:text="${pageNum}"
+               th:classappend="${pageNum == currentPage} ? 'active'">
+            </a>
+            <a th:if="${hasNext}"
+               th:href="@{'/myOrder/all/' + ${currentPage +1}}">
+                >
+            </a>
+            <a th:if="${endPage < totalPages}"
+               th:href="@{'/myOrder/all/' + ${endPage + 1}}">
+                »
+            </a>
+        </div>
     </div>
 </div>
 

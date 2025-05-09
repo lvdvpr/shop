@@ -49,6 +49,11 @@
             margin: 5px;
             /* object-fit: contain; */ /* 이미지 원본 비율 유지 */
         }
+        .pagination {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
         .pagination a {
             padding: 8px 12px;
             text-decoration: none;
@@ -70,8 +75,8 @@
 <div th:replace="~{ nav.html::navbar }"></div>
 
 <div class="search-container">
-    <form action="/search" method="POST">
-        <input type="text" name="searchText" style="display : inline">
+    <form action="/search" method="get">
+        <input type="text" name="searchText" style="display : inline" th:value="${searchText}">
         <button type="submit">검색</button>
     </form>
 </div>
@@ -84,6 +89,29 @@
             <p th:text="${item.price + '원'}"></p>
         </div>
     </div>
+</div>
+<div class="pagination" th:if="${totalPages > 0}">
+    <a th:if="${startPage > 1}"
+       th:href="@{'/search/' + ${startPage - 1} + '?searchText=' + ${searchText}}">
+        «
+    </a>
+    <a th:if="${hasPrevious}"
+       th:href="@{'/search/' + ${currentPage -1} + '?searchText=' + ${searchText}}">
+        <
+    </a>
+    <a th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
+       th:href="@{'/search/' + ${pageNum} + '?searchText=' + ${searchText}}"
+       th:text="${pageNum}"
+       th:classappend="${pageNum == currentPage} ? 'active'">
+    </a>
+    <a th:if="${hasNext}"
+       th:href="@{'/search/' + ${currentPage +1} + '?searchText=' + ${searchText}}">
+        >
+    </a>
+    <a th:if="${endPage < totalPages}"
+       th:href="@{'/search/' + ${endPage + 1} + '?searchText=' + ${searchText}}">
+        »
+    </a>
 </div>
 
 </body>

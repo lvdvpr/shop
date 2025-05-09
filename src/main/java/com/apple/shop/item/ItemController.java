@@ -124,10 +124,28 @@ public class ItemController {
         return presignedURL;
     }
 
-    @PostMapping("/search")
-    String searchPost(@RequestParam(name="searchText") String searchText, Model model) {
-        var result = itemRepository.fullTextSearch(searchText);
+    @GetMapping({"/search", "/search/{pageNum}"})
+    String searchPost(@RequestParam(name="searchText") String searchText, Model model, @PathVariable(required = false) Optional<Integer> pageNum) {
+        int searchPage;
+        if (pageNum.isPresent()) {
+            searchPage = pageNum.get();
+        } else {
+            searchPage = 1;
+        }
+        Page<Item> result = itemRepository.fullTextSearch(searchText, PageRequest.of(searchPage-1, 10));
         model.addAttribute("itemList", result);
+        model.addAttribute("currentPage", searchPage);
+        model.addAttribute("totalPages", result.getTotalPages());
+        model.addAttribute("hasNext", result.hasNext());
+        model.addAttribute("hasPrevious", result.hasPrevious());
+        model.addAttribute("searchText", searchText);
+
+        int blockSize = 5;
+        int currentBlock = (int) Math.ceil((double) searchPage / blockSize);
+        int startPage = (currentBlock - 1) * blockSize + 1;
+        int endPage = Math.min(startPage + blockSize - 1, result.getTotalPages());
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "searchList.html";
     }
