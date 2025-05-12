@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDateTime;
 
 @Entity
 @ToString
@@ -15,7 +19,10 @@ public class Item {
     private Long id;
     private String title;
     private Integer price;
+    private Integer quantity;
     private String username;
     private String image_url;
+    private LocalDateTime regTime;
+    private LocalDateTime updateTime;
 }
 

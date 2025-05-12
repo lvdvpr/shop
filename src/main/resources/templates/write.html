@@ -20,6 +20,7 @@
         <form action="/add" method="POST">
             <input name="title" placeholder="물건이름">
             <input name="price" placeholder="가격">
+            <input type="number" name="quantity" placeholder="재고수량" min="0" step="1">
             <input type="file" onchange="getURL(this)">
             <img src="" style="width: 100px; height: auto; margin:10px 5px; display: block;">
             <input type="hidden" name="image_url" value="">

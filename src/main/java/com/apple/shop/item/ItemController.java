@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,11 +33,11 @@ public class ItemController {
     }
 
     @PostMapping("/add")
-    String addItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price, String image_url, Authentication auth) {
+    String addItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price, String quantity, String image_url, Authentication auth) {
         if (image_url.trim().isEmpty()) {
             image_url = null; // 빈 문자열을 null로 변환
         }
-        itemService.saveItem(title, price, image_url, auth.getName());
+        itemService.saveItem(title, price, quantity, image_url, auth.getName());
         return "redirect:/list";
     }
 
@@ -65,23 +66,11 @@ public class ItemController {
     }
 
     @PostMapping("/edit")
-    String editItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price, Long id,  String image_url, Authentication auth) {
+    String editItem(@RequestParam(name="title") String title, @RequestParam(name="price", defaultValue = "0") String price, Integer quantity, Long id,  String image_url, Authentication auth, LocalDateTime regTime) {
         if (image_url.trim().isEmpty()) {
             image_url = null;
         }
-        itemService.editItem(title, price, id, image_url, auth.getName());
-        return "redirect:/list";
-    }
-
-    @GetMapping("/test1")
-    String test1() {
-        System.out.println("요청들어옴");
-        return "redirect:/list";
-    }
-
-    @PostMapping("/test1")
-    String test1(@RequestBody Map<String, Object> body) {
-        System.out.println(body.get("name"));
+        itemService.editItem(title, price, quantity, id, image_url, auth.getName(), regTime);
         return "redirect:/list";
     }
 

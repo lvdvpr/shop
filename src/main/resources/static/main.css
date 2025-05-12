@@ -34,7 +34,17 @@ button {
 input {
  display : block;
 }
-.detail img{
+.detail img {
  max-width : 30%;
  margin : auto;
+}
+label {
+ padding : 8px 13px;
+ margin-top : 5px;
+ vertical-align : middle;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+ opacity: 1;
+ display: inline;
 }
