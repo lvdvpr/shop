@@ -51,10 +51,18 @@
                 <p th:text="${#numbers.formatInteger(item.price, 3, 'COMMA') + '원'}"></p>
 
                 <form action="/order" method="POST">
+                    <input type="hidden" name="itemId" th:value="${item.id}">
                     <input type="hidden" name="title" th:value="${item.title}">
                     <input type="text" name="price" th:value="${#numbers.formatInteger(item.price, 3, 'COMMA') + '원'}" readonly>
-                    <input type="number" name="count" value="1" min="1" max="10" step="1">
-                    <button>주문하기</button>
+                    <input type="number" name="count" value="1" min="1" th:attr="max=${item.quantity}" step="1" th:disabled="${item.quantity == 0}"
+                           oninput="validateMax(this)">
+                    <div th:if="${item.quantity == 0}">
+                        <span class="warning-text">품절</span>
+                    </div>
+                    <div th:if="${item.quantity > 0 and item.quantity < 10}">
+                        <span th:text="${item.quantity + '개 남음'}" class="warning-text"></span>
+                    </div>
+                    <button th:disabled="${item.quantity == 0}">주문하기</button>
                 </form>
                 <a th:href="@{'/edit/' + ${item.id} }">✏️</a>
                 <span th:onclick="if(confirm('정말 삭제하겠습니까?')) {fetch('/delete?id=[[${item.id}]]', {method : 'DELETE'})
@@ -89,6 +97,16 @@
         </div>
     </div>
 </div>
-
+<script>
+    function validateMax(input) {
+        const max = parseInt(input.max);
+        const val = parseInt(input.value);
+        if (val > max) {
+            input.value = max;
+        } else if (val < 1) {
+            input.value = 1;
+        }
+    }
+</script>
 </body>
 </html>

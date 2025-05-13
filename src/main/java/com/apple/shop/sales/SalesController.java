@@ -26,13 +26,14 @@ public class SalesController {
     private final MemberRepository memberRepository;
 
     @PostMapping("/order")
-    public String order(@RequestParam String title,
+    public String order(@RequestParam Long itemId,
+                        @RequestParam String title,
                         @RequestParam String price,
                         @RequestParam Integer count,
                         Authentication auth) {
 
         int parsedPrice = Integer.parseInt(price.replaceAll("[,원]",""));
-        salesService.saveSales(title, parsedPrice, count, auth);
+        salesService.saveSales(itemId, title, parsedPrice, count, auth);
         return "redirect:/list";
     }
 

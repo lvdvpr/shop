@@ -1,5 +1,6 @@
 package com.apple.shop.item;
 
+import com.apple.shop.exception.OutOfStockException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,5 +25,13 @@ public class Item {
     private String image_url;
     private LocalDateTime regTime;
     private LocalDateTime updateTime;
+
+    public void removeStock(int count) {
+        int restStock = this.quantity - count;
+        if (restStock < 0) {
+            throw new OutOfStockException("재고부족");
+        }
+        this.quantity = restStock;
+    }
 }
 
